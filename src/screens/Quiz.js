@@ -3,9 +3,9 @@ import React from "react";
 import { TouchableOpacity } from "react-native";
 import { StyleSheet } from "react-native";
 
-const Quiz = () => {
+const Quiz = ({ navigation }) => {
   return (
-    <View style={styles.quizContainer}>
+    <View style={styles.container}>
       <View>
         <Text style={styles.topTitle}>something text</Text>
       </View>
@@ -30,6 +30,13 @@ const Quiz = () => {
         <TouchableOpacity>
           <Text>NEXT</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("home");
+          }}
+        >
+          <Text>END</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -38,9 +45,10 @@ const Quiz = () => {
 export default Quiz;
 
 const styles = StyleSheet.create({
-  quizContainer: {
+  container: {
+    paddingTop: 40,
+    paddingHorizontal: 20,
     height: "100%",
-    padding: 15,
   },
   topTitle: {
     marginVertical: 20,

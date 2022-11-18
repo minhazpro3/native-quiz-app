@@ -4,9 +4,9 @@ import { Image } from "react-native";
 import { StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native";
 
-const Result = () => {
+const Result = ({ navigation }) => {
   return (
-    <View>
+    <View style={styles.container}>
       <View>
         <Text>Quiz Result</Text>
       </View>
@@ -18,7 +18,7 @@ const Result = () => {
         />
       </View>
       <View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("home")}>
           <Text>Home</Text>
         </TouchableOpacity>
       </View>
@@ -29,9 +29,10 @@ const Result = () => {
 export default Result;
 
 const styles = StyleSheet.create({
-  resultContainer: {
-    height: "100%",
-    padding: 15,
+  container: {
+    paddingTop: 40,
+    paddingHorizontal: 20,
+    // height: "100%",
   },
   topTitle: {
     marginVertical: 20,
