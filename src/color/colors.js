@@ -1,4 +1,4 @@
-const colors = {
+const Colors = {
   main: "#48B600",
   white: "#FFFFFF",
   black: "#000000",
