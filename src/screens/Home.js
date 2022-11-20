@@ -96,6 +96,5 @@ const styles = StyleSheet.create({
   },
   victoryGroup: {
     alignItems: "center",
-    // marginBottom: 390,
   },
 });
