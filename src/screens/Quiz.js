@@ -14,14 +14,18 @@ const Quiz = ({ navigation }) => {
   const [questions, setQuestions] = useState();
   const [count, setCount] = useState(0);
   const [options, setOption] = useState([]);
+  const [score, setScore] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getQuestions = async () => {
+    setIsLoading(true);
     const url =
       "https://opentdb.com/api.php?amount=20&category=21&difficulty=medium&encode=url3986";
     const res = await fetch(url);
     const data = await res.json();
     setQuestions(data.results);
     setOption(generateOptionsAndShuttle(data.results[0]));
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -40,9 +44,36 @@ const Quiz = ({ navigation }) => {
     setOption(generateOptionsAndShuttle(questions[count + 1]));
   };
 
+  const handleSelectOption = (_option) => {
+    if (_option === questions[count].correct_answer) {
+      setScore(score + 10);
+    }
+
+    if (count !== 19) {
+      setCount(count + 1);
+      setOption(generateOptionsAndShuttle(questions[count + 1]));
+    }
+  };
+
+  const resultShow = () => {
+    navigation.navigate("result", {
+      score: score,
+    });
+  };
+
   return (
     <View style={styles.container}>
-      {questions ? (
+      {isLoading ? (
+        <View
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ fontSize: 30, fontWeight: "500" }}>Loading...</Text>
+        </View>
+      ) : questions ? (
         <View style={styles.childContainer}>
           <View>
             <Text style={styles.question}>
@@ -50,24 +81,36 @@ const Quiz = ({ navigation }) => {
             </Text>
           </View>
           <View style={styles.quizOptions}>
-            <TouchableOpacity style={styles.optionButton}>
+            <TouchableOpacity
+              style={styles.optionButton}
+              onPress={() => handleSelectOption(options[0])}
+            >
               <Text style={styles.option}>
                 {decodeURIComponent(options[0])}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.optionButton}>
+            <TouchableOpacity
+              style={styles.optionButton}
+              onPress={() => handleSelectOption(options[1])}
+            >
               <Text style={styles.option}>
                 {" "}
                 {decodeURIComponent(options[1])}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.optionButton}>
+            <TouchableOpacity
+              style={styles.optionButton}
+              onPress={() => handleSelectOption(options[2])}
+            >
               <Text style={styles.option}>
                 {" "}
                 {decodeURIComponent(options[2])}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.optionButton}>
+            <TouchableOpacity
+              style={styles.optionButton}
+              onPress={() => handleSelectOption(options[3])}
+            >
               <Text style={styles.option}>
                 {" "}
                 {decodeURIComponent(options[3])}
@@ -75,19 +118,21 @@ const Quiz = ({ navigation }) => {
             </TouchableOpacity>
           </View>
           <View>
-            <Text style={styles.count}>{count}</Text>
+            <Text style={styles.count}>
+              Question{count} && Score{score}
+            </Text>
           </View>
           <View style={styles.quizButtonContain}>
-            <TouchableOpacity style={styles.button}>
+            {/* <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>SKIP</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             {count !== 19 && (
               <TouchableOpacity style={styles.button} onPress={handleNext}>
                 <Text style={styles.buttonText}>NEXT</Text>
               </TouchableOpacity>
             )}
             {count === 19 && (
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity style={styles.button} onPress={resultShow}>
                 <Text style={styles.buttonText}>Result</Text>
               </TouchableOpacity>
             )}

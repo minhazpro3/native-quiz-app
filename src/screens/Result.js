@@ -4,11 +4,13 @@ import { Image } from "react-native";
 import { StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native";
 
-const Result = ({ navigation }) => {
+const Result = ({ navigation, route }) => {
+  const { score } = route.params;
+
   return (
     <View style={styles.container}>
       <View>
-        <Text>Quiz Result</Text>
+        <Text>{score}</Text>
       </View>
       <View style={styles.imageContainer}>
         <Image
@@ -18,8 +20,11 @@ const Result = ({ navigation }) => {
         />
       </View>
       <View>
-        <TouchableOpacity onPress={() => navigation.navigate("home")}>
-          <Text>Home</Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("home")}
+        >
+          <Text style={styles.buttonText}> Go to home</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -50,5 +55,17 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     justifyContent: "space-between",
     flexDirection: "row",
+  },
+  button: {
+    backgroundColor: "#ffd8be",
+    padding: 20,
+    borderRadius: 40,
+    alignItems: "center",
+    marginVertical: 40,
+  },
+  buttonText: {
+    fontSize: 23,
+    fontWeight: "800",
+    color: "#90a955",
   },
 });
