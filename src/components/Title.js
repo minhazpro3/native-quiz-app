@@ -4,7 +4,10 @@ import React from "react";
 const Title = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}> READY TO CHALLENGE?</Text>
+      <Text style={styles.title}>
+        {" "}
+        Congratulation <Text style={styles.you}> to You!!</Text>
+      </Text>
     </View>
   );
 };
@@ -15,11 +18,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 33,
     fontWeight: "800",
-    color: "#fcbf49",
+    color: "#ffff",
+    paddingVertical: 20,
   },
-  container: {
-    paddingTop: 16,
-    justifyContent: "center",
-    alignItems: "center",
+
+  you: {
+    color: "#fe4f4f",
   },
 });
